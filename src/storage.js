@@ -63,6 +63,8 @@ Storage.prototype.getTransactionsList = function (userId, callback) {
     this.storage.db.collection('transactions').find(request).toArray(callback);
 };
 
-Storage.prototype.changeTransactionState()
+Storage.prototype.changeTransactionState = function () {
+
+};
 
 module.exports = Storage;
