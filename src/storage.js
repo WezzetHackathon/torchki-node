@@ -27,24 +27,14 @@ Storage.prototype.addUser = function (data, callback) {
 
 Storage.prototype.addTransaction = function (data, callback) {
     this.storage.db.collection('transactions', function(err, transactions) {
-        transactions.findAndModify(
-            {},
-            [],
-            {
-                from: data.from,
-                to: data.to,
-                amount: data.amount,
-                createdAt: Date.now(),
-                updatedAt: null,
-                status: 'open'
-            },
-            {
-                w: 1,
-                new: true,
-                upsert: true
-            },
-            callback
-        );
+        transactions.insert({
+            from: data.from,
+            to: data.to,
+            amount: data.amount,
+            createdAt: Date.now(),
+            updatedAt: null,
+            status: 'open'
+        }, callback);
     }.bind(this));
 };
 
@@ -63,8 +53,18 @@ Storage.prototype.getTransactionsList = function (userId, callback) {
     this.storage.db.collection('transactions').find(request).toArray(callback);
 };
 
-Storage.prototype.changeTransactionState = function () {
-
+Storage.prototype.changeTransactionState = function (data, callback) {
+    this.storage.db.collection('transactions', function(err, transactions) {
+        transactions.find({_id: ObjectID(data.id)}).toArray(function(err, items) {
+            var item = items[0];
+            if (!item) return;
+            transactions.update({_id: ObjectID(data.id)}, {
+                $set: {
+                    status: data.state
+                }
+            }, callback);
+        });
+    });
 };
 
 module.exports = Storage;

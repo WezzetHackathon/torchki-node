@@ -1,5 +1,5 @@
 module.exports = {
-    'opened': 'opened',
+    'open': 'open',
     'accepted': 'accepted',
     'declined': 'declined',
     'paid': 'paid',

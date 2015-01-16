@@ -37,8 +37,8 @@ Handler.prototype.getTransactionsList = function (data, callback) {
     this.storage.getTransactionsList(data, callback);
 };
 
-Handler.prototype.changeTransactionState = function (data) {
-    return [];
+Handler.prototype.changeTransactionState = function (data, callback) {
+    this.storage.changeTransactionState(data, callback);
 };
 
 module.exports = Handler;

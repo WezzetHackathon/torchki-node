@@ -28,8 +28,8 @@ Application.prototype.run = function () {
     }.bind(this));
 
     this.server.init({
-        host: '127.0.0.1',
-        port: 8082
+        host: '0.0.0.0',
+        port: 8080
     });
 
     this.storage.init({
